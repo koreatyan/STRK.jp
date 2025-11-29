@@ -112,35 +112,42 @@
 </form>
 </div>
 <script>
-    document.getElementById('messageForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const botToken = document.getElementById('botToken').value;
-      const channelId = document.getElementById('channelId').value;
-      const message = document.getElementById('message').value;
-      const repeatCount = parseInt(document.getElementById('repeatCount').value);
+document.getElementById('messageForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const botToken = document.getElementById('botToken').value;
+  const channelId = document.getElementById('channelId').value;
+  const message = document.getElementById('message').value;
+  const repeatCount = parseInt(document.getElementById('repeatCount').value);
 
-      const errorMessage = document.getElementById('errorMessage');
-      errorMessage.style.display = 'none';
+  const errorMessage = document.getElementById('errorMessage');
+  errorMessage.style.display = 'none';
 
-      if (!botToken || !channelId || !message) {
-        errorMessage.textContent = 'すべてのフィールドを入力してください';
-        errorMessage.style.display = 'block';
-        return;
-      }
+  if (!botToken || !channelId || !message) {
+    errorMessage.textContent = 'すべてのフィールドを入力してください';
+    errorMessage.style.display = 'block';
+    return;
+  }
 
-      try {
-        // Discord APIを使用したメッセージ送信処理（実際の実装は必要に応じて追加）
-        console.log(`Sending ${repeatCount} messages to channel ${channelId}`);
-        
-        // サンプルの成功メッセージ
-        alert(`メッセージが${repeatCount}回送信されました！`);
-        e.target.reset();
-      } catch (error) {
-        errorMessage.textContent = 'エラーが発生しました：' + error.message;
-        errorMessage.style.display = 'block';
-      }
-    });
-</script>
-</body>
+  try {
+    for (let i = 0; i < repeatCount; i++) {
+      await fetch(`https://discord.com/api/v9/channels/${channelId}/messages`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bot ${botToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content: message })
+      });
+    }
+    
+    alert(`メッセージが${repeatCount}回送信されました！`);
+    e.target.reset();
+  } catch (error) {
+    errorMessage.textContent = 'エラーが発生しました：' + error.message;
+    errorMessage.style.display = 'block';
+  }
+});
+      </script>
+　</body>
 </html>
