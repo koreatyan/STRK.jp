@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おにゃんこ砲</title>
+<style>
+    body {
+      background-image: url('https://source.unsplash.com/1920x1080/?technology');
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    input[type="number"] {
+      width: 100px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #cc0000;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>おにゃんこ攻撃</h1>
+<form id="messageForm">
+<div class="input-group">
+<label for="botToken">Bot Token:</label>
+<input type="text" id="botToken" required>
+</div>
+<div class="input-group">
+<label for="channelId">チャンネルID:</label>
+<input type="text" id="channelId" required>
+</div>
+<div class="input-group">
+<label for="message">メッセージ内容:</label>
+<textarea id="message" required></textarea>
+</div>
+<div class="input-group">
+<label for="repeatCount">繰り返し回数:</label>
+<input type="number" id="repeatCount" value="1" min="1" required>
+</div>
+<button type="submit">🔥Freeeeeee</button>
+<div class="error" id="errorMessage"></div>
+</form>
+</div>
+<script>
+    document.getElementById('messageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const botToken = document.getElementById('botToken').value;
+      const channelId = document.getElementById('channelId').value;
+      const message = document.getElementById('message').value;
+      const repeatCount = parseInt(document.getElementById('repeatCount').value);
+
+      const errorMessage = document.getElementById('errorMessage');
+      errorMessage.style.display = 'none';
+
+      if (!botToken || !channelId || !message) {
+        errorMessage.textContent = 'すべてのフィールドを入力してください';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      try {
+        // Discord APIを使用したメッセージ送信処理（実際の実装は必要に応じて追加）
+        console.log(`Sending ${repeatCount} messages to channel ${channelId}`);
+        
+        // サンプルの成功メッセージ
+        alert(`メッセージが${repeatCount}回送信されました！`);
+        e.target.reset();
+      } catch (error) {
+        errorMessage.textContent = 'エラーが発生しました：' + error.message;
+        errorMessage.style.display = 'block';
+      }
+    });
+</script>
+</body>
+</html>
